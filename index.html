@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VOLUME — Studio Ruang & Gerak</title>
+<meta name="description" content="Demo website scroll-driven animation 3D dengan GSAP ScrollTrigger." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="progress"><span class="progress__bar" data-progress></span></div>
+
+<header class="nav">
+  <a class="nav__brand" href="#top">VOLUME<span>®</span></a>
+  <nav class="nav__links">
+    <a href="#kubus">Kubus</a>
+    <a href="#lapisan">Lapisan</a>
+    <a href="#galeri">Galeri</a>
+    <a href="#cincin">Cincin</a>
+  </nav>
+  <span class="nav__meta" data-clock>—</span>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero__grid" aria-hidden="true">
+    <div class="hero__plane"></div>
+  </div>
+  <div class="hero__shapes" aria-hidden="true">
+    <span class="shape shape--1" data-shape="1"></span>
+    <span class="shape shape--2" data-shape="2"></span>
+    <span class="shape shape--3" data-shape="3"></span>
+  </div>
+
+  <div class="hero__inner">
+    <p class="eyebrow" data-fade>Scroll-driven · GSAP ScrollTrigger · CSS 3D</p>
+    <h1 class="hero__title">
+      <span class="line"><span class="line__in">RUANG</span></span>
+      <span class="line"><span class="line__in">YANG</span></span>
+      <span class="line"><span class="line__in">BERGERAK</span></span>
+    </h1>
+    <p class="hero__lead" data-fade>
+      Setiap pixel di halaman ini diputar, dimiringkan, dan didorong menjauh pada sumbu&nbsp;Z.
+      Tidak ada video, tidak ada WebGL — hanya transform 3D yang dikendalikan posisi scroll kamu.
+    </p>
+    <div class="hero__cta" data-fade>
+      <a class="btn" href="#kubus">Mulai turun</a>
+      <span class="hint">gulir perlahan ↓</span>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ============ MANIFEST / TEXT 3D ============ -->
+<section class="manifest">
+  <p class="manifest__text" data-split>
+    Desain bukan permukaan datar. Ia punya kedalaman, bayangan, dan jarak —
+    dan scroll adalah alat kendali kamera-nya.
+  </p>
+</section>
+
+<!-- ============ KUBUS ============ -->
+<section class="cube-sec" id="kubus">
+  <div class="cube-sec__pin">
+    <div class="cube-stage">
+      <div class="cube" data-cube>
+        <figure class="face face--front"><b>01</b><span>Front</span></figure>
+        <figure class="face face--back"><b>02</b><span>Back</span></figure>
+        <figure class="face face--right"><b>03</b><span>Right</span></figure>
+        <figure class="face face--left"><b>04</b><span>Left</span></figure>
+        <figure class="face face--top"><b>05</b><span>Top</span></figure>
+        <figure class="face face--bottom"><b>06</b><span>Bottom</span></figure>
+      </div>
+    </div>
+    <div class="cube-sec__copy">
+      <h2 class="h2">Enam sisi,<br />satu gulungan</h2>
+      <ol class="steps">
+        <li data-step="0"><b>rotationY</b><span>Kubus berputar mengikuti arah scroll.</span></li>
+        <li data-step="1"><b>rotationX</b><span>Sumbu kedua ikut dimiringkan.</span></li>
+        <li data-step="2"><b>scale + z</b><span>Kamera mendekat, perspektif menajam.</span></li>
+      </ol>
+      <p class="muted">ScrollTrigger · scrub: 1 · pin: true</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LAPISAN / PARALLAX Z ============ -->
+<section class="layers" id="lapisan">
+  <div class="layers__pin">
+    <div class="layers__stage">
+      <div class="layer" data-layer="1"><span>LAPISAN 01</span></div>
+      <div class="layer" data-layer="2"><span>LAPISAN 02</span></div>
+      <div class="layer" data-layer="3"><span>LAPISAN 03</span></div>
+      <div class="layer" data-layer="4"><span>LAPISAN 04</span></div>
+      <div class="layer layer--core" data-layer="5"><span>INTI</span></div>
+    </div>
+    <h2 class="layers__title"><span>MENEMBUS</span><span>KEDALAMAN</span></h2>
+  </div>
+</section>
+
+<!-- ============ GALERI HORIZONTAL ============ -->
+<section class="gallery" id="galeri">
+  <div class="gallery__pin">
+    <header class="gallery__head">
+      <h2 class="h2">Galeri miring</h2>
+      <p class="muted">Scroll vertikal → gerak horizontal. Kartu memutar sendiri saat melewati tengah layar.</p>
+    </header>
+    <div class="gallery__track" data-track>
+      <article class="card" data-card>
+        <div class="card__inner">
+          <div class="card__num">01</div>
+          <h3>Horizon</h3>
+          <p>Gradien dingin, sudut tajam, jarak fokus panjang.</p>
+          <div class="card__chip">rotationY</div>
+        </div>
+      </article>
+      <article class="card" data-card>
+        <div class="card__inner">
+          <div class="card__num">02</div>
+          <h3>Monolit</h3>
+          <p>Blok tunggal yang berdiri melawan garis grid.</p>
+          <div class="card__chip">translateZ</div>
+        </div>
+      </article>
+      <article class="card" data-card>
+        <div class="card__inner">
+          <div class="card__num">03</div>
+          <h3>Prisma</h3>
+          <p>Pembiasan warna di tiap perubahan sudut pandang.</p>
+          <div class="card__chip">skew</div>
+        </div>
+      </article>
+      <article class="card" data-card>
+        <div class="card__inner">
+          <div class="card__num">04</div>
+          <h3>Orbit</h3>
+          <p>Lintasan melingkar yang dikunci ke posisi scroll.</p>
+          <div class="card__chip">scrub</div>
+        </div>
+      </article>
+      <article class="card" data-card>
+        <div class="card__inner">
+          <div class="card__num">05</div>
+          <h3>Residu</h3>
+          <p>Jejak gerak yang tertinggal setelah animasi selesai.</p>
+          <div class="card__chip">snap</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CINCIN 3D ============ -->
+<section class="ring" id="cincin">
+  <div class="ring__pin">
+    <div class="ring__stage">
+      <div class="ring__body" data-ring>
+        <div class="panel"><span>GSAP</span></div>
+        <div class="panel"><span>SCROLL</span></div>
+        <div class="panel"><span>TRIGGER</span></div>
+        <div class="panel"><span>3D</span></div>
+        <div class="panel"><span>SCRUB</span></div>
+        <div class="panel"><span>PIN</span></div>
+        <div class="panel"><span>DEPTH</span></div>
+        <div class="panel"><span>MOTION</span></div>
+      </div>
+    </div>
+    <div class="ring__copy">
+      <h2 class="h2">Cincin 360°</h2>
+      <p class="muted">Delapan panel disusun pada silinder dengan <code>rotateY(n·45deg) translateZ(R)</code>, lalu seluruh badan diputar oleh progres scroll.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUTRO ============ -->
+<section class="outro">
+  <h2 class="outro__title" data-split>Sampai jumpa di dasar halaman.</h2>
+  <p class="outro__credit" data-fade>Dibuat oleh <a href="#top" class="credit-link">randpill</a></p>
+  <a class="btn btn--ghost" href="#top" data-fade>Kembali ke atas ↑</a>
+</section>
+
+<footer class="footer">
+  <span>VOLUME® — demo scroll 3D</span>
+  <span class="footer__credit">by <b>randpill</b></span>
+  <span>GSAP 3.13 · ScrollTrigger · Lenis</span>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
