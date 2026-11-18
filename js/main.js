@@ -67,6 +67,22 @@
     setInterval(tick, 1000);
   }
 
+  /* ---------- 3b. Nav: sembunyi saat scroll turun, muncul saat scroll naik --- */
+  const nav = document.querySelector(".nav");
+  if (nav) {
+    ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        if (self.scroll() < 80) {
+          nav.classList.remove("nav--hidden");
+          return;
+        }
+        nav.classList.toggle("nav--hidden", self.direction === 1);
+      },
+    });
+  }
+
   /* ---------- 4. HERO -------------------------------------------------- */
   const heroIn = gsap.timeline({ defaults: { ease: "expo.out" } });
   heroIn
@@ -283,6 +299,55 @@
     });
   }
 
+
+  /* ---------- 9b. REVEAL: ruang yang bergerak sendiri ------------------
+     Satu-satunya gerak di halaman ini yang TIDAK terikat scrub: begitu
+     section ini terlihat, bentuknya melayang sendiri di waktu nyata
+     (repeat: -1). Berhenti scroll tidak menghentikannya — itu intinya. */
+  const reveal = document.querySelector(".reveal");
+  if (reveal) {
+    gsap.from(".reveal__title .line__in", {
+      yPercent: 115,
+      rotationX: -82,
+      opacity: 0,
+      duration: 1.3,
+      stagger: 0.12,
+      ease: "expo.out",
+      scrollTrigger: { trigger: reveal, start: "top 75%" },
+    });
+    gsap.from(".reveal__lead", {
+      y: 24,
+      opacity: 0,
+      duration: 1,
+      scrollTrigger: { trigger: reveal, start: "top 65%" },
+    });
+
+    const driftTweens = gsap.utils.toArray(".reveal__shape").map((el, i) =>
+      gsap.to(el, {
+        x: () => gsap.utils.random(-36, 36),
+        y: () => gsap.utils.random(-28, 28),
+        rotation: () => gsap.utils.random(-20, 20),
+        duration: () => gsap.utils.random(7, 11),
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: i * 0.7,
+        paused: true,
+      })
+    );
+    // Hemat kerja GPU: bentuknya cuma melayang selagi section ini di layar.
+    // Tetap sejalan dengan niat awal — bergerak sendiri, lepas dari scrub —
+    // tapi berhenti saat sudah tidak terlihat, bukan selamanya di background.
+    ScrollTrigger.create({
+      trigger: reveal,
+      start: "top 80%",
+      end: "bottom 20%",
+      onEnter: () => driftTweens.forEach((t) => t.play()),
+      onEnterBack: () => driftTweens.forEach((t) => t.play()),
+      onLeave: () => driftTweens.forEach((t) => t.pause()),
+      onLeaveBack: () => driftTweens.forEach((t) => t.pause()),
+    });
+  }
   /* ---------- 11. Refresh setelah font & gambar siap ------------------- */
   if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
   window.addEventListener("load", () => ScrollTrigger.refresh());
@@ -291,7 +356,7 @@
   if (reduced) {
     ScrollTrigger.getAll().forEach((st) => st.kill());
     gsap.globalTimeline.clear();
-    gsap.set("[data-fade], .hero__title .line__in, .cube-sec__copy > *, .ring__copy > *, .w, .layer", {
+    gsap.set("[data-fade], .hero__title .line__in, .cube-sec__copy > *, .ring__copy > *, .w, .layer, .reveal__title .line__in, .reveal__lead", {
       clearProps: "all",
       opacity: 1,
     });
